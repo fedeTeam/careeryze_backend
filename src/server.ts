@@ -119,10 +119,9 @@ const port = 8000;
 const app = express();
 app.use(bodyParser.json());
 const cors = require('cors');
-app.use(
-  cors({
-    origin: "*",
-  })
+app.use(cors({
+  origin: "https://careeryze-frontend.herokuapp.com",
+})
 );
 
 app.get("/", (_req, res) => {
@@ -154,7 +153,7 @@ app.post("/api/authenticate", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/api/chat", async (req: Request, res: Response) => {
+app.post("/api/chat", cors({ origin: "*" }), async (req: Request, res: Response) => {
   const requestMessages: ChatCompletionRequestMessage[] = req.body.messages;
 
   try {
@@ -211,7 +210,7 @@ app.post("/api/chat", async (req: Request, res: Response) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+app.listen(8000, () => {
+  console.log(`Server started at http://localhost:8000`);
 });
 
