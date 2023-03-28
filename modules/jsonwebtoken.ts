@@ -7,6 +7,7 @@ import {
   SignOptions,
   VerifyOptions,
   Algorithm,
+  VerifyErrors
 } from "jsonwebtoken"
 
 const sign: typeof signType = jsonwebtoken.default.sign
@@ -17,5 +18,6 @@ export {
   verify,
   Algorithm,
   SignOptions,
+  VerifyErrors,
   VerifyOptions,
 }
