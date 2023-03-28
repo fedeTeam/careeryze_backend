@@ -1,3 +1,5 @@
+import { sign, verify, SignOptions, VerifyOptions, Algorithm } from "../modules/jsonwebtoken"
+
 import express, { Request, Response } from "express";
 import cors from "cors";
 import {
@@ -13,7 +15,7 @@ import GPT3TokenizerImport from "gpt3-tokenizer";
 import util from 'util';
 // Authentication module import
 import jwt from "jsonwebtoken";
-import { VerifyErrors, VerifyOptions } from 'jsonwebtoken';
+import { VerifyErrors } from 'jsonwebtoken';
 
 
 import bcrypt from 'bcrypt';
