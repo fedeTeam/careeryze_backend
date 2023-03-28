@@ -153,7 +153,17 @@ app.post("/api/authenticate", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/api/chat", async (req: Request, res: Response) => {
+app.options("/api/chat", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
+  );
+  res.sendStatus(200);
+});
+
+app.post("/api/chat", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   const requestMessages: ChatCompletionRequestMessage[] = req.body.messages;
