@@ -1,7 +1,7 @@
 import { sign, verify, SignOptions, VerifyOptions, VerifyErrors, Algorithm } from "../modules/jsonwebtoken"
 
 import express, { Request, Response } from "express";
-import cors from "cors";
+//import cors from "cors";
 import {
   ChatCompletionRequestMessage,
   CreateChatCompletionRequest,
@@ -118,12 +118,16 @@ dotenv.config();
 const port = 8000;
 const app = express();
 app.use(bodyParser.json());
+const cors = require('cors');
 app.use(
   cors({
     origin: "*",
   })
 );
 
+app.get("/", (_req, res) => {
+  res.send("Hello, World!");
+});
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
