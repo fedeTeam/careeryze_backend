@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "npm run build && npm run start-dev",
-    "build": "npm install && tsc",
+    "build": "npm install && npm install typescript && tsc",
     "start-dev": "ts-node --esm src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
