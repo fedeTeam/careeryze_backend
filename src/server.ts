@@ -9,8 +9,12 @@ import {
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import GPT3TokenizerImport from "gpt3-tokenizer";
+// Util
+import util from 'util';
 // Authentication module import
 import jwt from "jsonwebtoken";
+import { VerifyErrors, VerifyOptions } from 'jsonwebtoken';
+
 
 import bcrypt from 'bcrypt';
 
@@ -64,17 +68,37 @@ const authenticate = async (req: Request, res: Response): Promise<{ token: strin
   return { token };
 };
 
-const verifyToken = (token: string): Promise<{ email: string }> => {
+// const verifyToken = (token: string): Promise<{ email: string }> => {
+//   return new Promise((resolve, reject) => {
+//     jwt.verify(token, jwtSecret, (err, decoded) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve(decoded as { email: string });
+//       }
+//     });
+//   });
+// };
+
+
+type DecodedToken = {
+  email: string;
+  iat: number;
+  exp: number;
+};
+
+const verifyToken = (token: string): Promise<DecodedToken> => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, jwtSecret, (err, decoded) => {
       if (err) {
         reject(err);
       } else {
-        resolve(decoded as { email: string });
+        resolve(decoded as DecodedToken);
       }
     });
   });
 };
+
 
 const GPT3Tokenizer: typeof GPT3TokenizerImport =
   typeof GPT3TokenizerImport === "function"
