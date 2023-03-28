@@ -149,11 +149,13 @@ app.post("/api/authenticate", async (req: Request, res: Response) => {
       res.status(401).send("Invalid credentials");
     }
   } catch (error) {
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Soething went wrong");
   }
 });
 
-app.post("/api/chat", cors({ origin: "*" }), async (req: Request, res: Response) => {
+app.post("/api/chat", async (req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
   const requestMessages: ChatCompletionRequestMessage[] = req.body.messages;
 
   try {
