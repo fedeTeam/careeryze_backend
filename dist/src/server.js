@@ -8,13 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import express from "express";
-import cors from "cors";
+//import cors from "cors";
 import { Configuration, OpenAIApi, } from "openai";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import GPT3TokenizerImport from "gpt3-tokenizer";
 // Authentication module import
 import jwt from "jsonwebtoken";
+// CORS
+import cors from 'cors';
 import bcrypt from 'bcrypt';
 const users = [
     {
@@ -71,9 +73,13 @@ dotenv.config();
 const port = 8000;
 const app = express();
 app.use(bodyParser.json());
+// const cors = require('cors');
 app.use(cors({
-    origin: "*",
+    origin: "https://careeryze-frontend.herokuapp.com",
 }));
+app.get("/", (_req, res) => {
+    res.send("Hello, World!");
+});
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -94,11 +100,18 @@ app.post("/api/authenticate", (req, res) => __awaiter(void 0, void 0, void 0, fu
         }
     }
     catch (error) {
-        res.status(500).send("Something went wrong");
+        res.status(500).send("Soething went wrong");
     }
 }));
+app.options("/api/chat", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+    res.sendStatus(200);
+});
 app.post("/api/chat", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const requestMessages = req.body.messages;
     try {
         let tokenCount = 0;
@@ -147,7 +160,7 @@ app.post("/api/chat", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 }));
 // Start the server
-app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
+app.listen(8000, () => {
+    console.log(`Server started at http://localhost:8000`);
 });
 //# sourceMappingURL=server.js.map
